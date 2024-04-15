@@ -28,4 +28,4 @@ replay_pid*
 *.env 
 .env
 node_modules/
-*.json
+admin.json
