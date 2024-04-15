@@ -9,5 +9,8 @@ const nfcService = {
     deleteNfc: async(body) => {
         
     },
+    listNfc: async(body) => {
+        
+    }
 }
 export default nfcService;

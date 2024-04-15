@@ -7,4 +7,8 @@ router.get(
     sosController.sos
 )
 
+router.post(
+    "/help",
+    sosController.emergency
+)
 export default router;

@@ -17,8 +17,13 @@ const sqlUser = {
         return user;
     },
 
-    updateFcm: async (info,token) => {
-        const user = await Users.update({fcm:token},{where:{id:info}})
+    updateFcm: async (id,token) => {
+        const user = await Users.update({fcm:token},{where:{id:id}})
+        return user;
+    },
+
+    updateLocation: async (id,location) => {
+        const user = await Users.update({location:location},{where:{id:id}})
         return user;
     },
 

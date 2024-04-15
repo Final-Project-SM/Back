@@ -3,9 +3,10 @@ import fcmService from "../services/fcmServices.js";
 const fcmController = {
     updateFcm: async (req,res) => {
         try{
-
+            const response = await fcmService.updateFcm(req.body);
+            return res.json(response);
         }catch(err){
-            return res.json()
+            return res.json({sc:400})
         }
     }
 }

@@ -5,7 +5,7 @@ const userController = {
             const response = await userService.login(req.body);
             return res.json(response)
         }catch(err){
-            return res.json("실패")
+            return res.json({sc:400})
         }
     },
 
@@ -14,16 +14,23 @@ const userController = {
             const response = await userService.signUp(req.body);
             return res.json(response)
         }catch(err){
-            return res.json("실패")
+            return res.json({sc:400})
         }
     },
 
+    updateLocation: async (req,res) => {
+        try{
+
+        }catch(err){
+            return res.json({sc:400})
+        }
+    },
     changeUser: async (req,res) => {
         try{
             const response = await userService.changeUser(req.body);
             return res.json("성공")
         }catch(err){
-            return res.json("실패")
+            return res.json({sc:400})
         }
     },
 
@@ -32,7 +39,7 @@ const userController = {
             const response = await userService.changeSos(req.body);
             return res.json("성공")
         }catch(err){
-            return res.json("실패")
+            return res.json({sc:400})
         }
     }
 };

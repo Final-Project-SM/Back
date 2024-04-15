@@ -43,6 +43,19 @@ const userService = {
         }
         
     },
+    updateLocation: async (body) => {
+        const user = await sqlUser.checkId(body.id)
+        if(user){
+            try{
+                const updateLocation = await sqlUser.updateFcm(body.id,body.fcm);
+                return{sc:"200"}
+            }catch{
+                return {sc:"400"}
+            }
+        }else{
+            return {sc:"400"}
+        }
+    },
     changeUser: async (body) => {
         return {sc:200};
     },

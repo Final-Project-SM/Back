@@ -18,5 +18,10 @@ router.post(
     nfcController.deleteNfc
 );
 
+router.post(
+    "/list",
+    nfcController.listNfc
+)
+
 
 export default router;
