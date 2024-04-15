@@ -7,6 +7,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 })
 dotenv.config();
+
 const snsServices = {
     test: async (body) => { //문자메세징
         try{
@@ -33,7 +34,12 @@ const snsServices = {
             // 좌표 (위도와 경도)
             const latitude = 37.16308;
             const longitude = 127.0620; 
-            const response = await axios.get(`http://dapi.kakao.com/v2/local/search/keyword.json?y=37.14596&x=127.0672&radius=2000&query=%EC%86%8C%EB%B0%A9%EC%84%9C`, {
+            // const response = await axios.get(`http://dapi.kakao.com/v2/local/search/keyword.json?y=37.14596&x=127.0672&radius=2000&query=%EC%86%8C%EB%B0%A9%EC%84%9C`, {
+            // headers: {
+            //     Authorization: `KakaoAK ${process.env.KAKAO}`,
+            // },
+            // });
+            const response = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?y=37.14596&x=127.0672`, {
             headers: {
                 Authorization: `KakaoAK ${process.env.KAKAO}`,
             },
@@ -46,6 +52,7 @@ const snsServices = {
         }
     },
     test3: async (body) => { //nfc 메세지
+        console.log(process.env.FCM)
         let message = {
             notification: {
                 title: "사용자",

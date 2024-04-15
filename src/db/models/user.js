@@ -51,6 +51,16 @@ Users.init(
             type : DataTypes.STRING(255),
             allowNull :true
         },
+
+        fcm : {
+            type : DataTypes.STRING(255),
+            allowNull :true
+        },
+
+        location : {
+            type : DataTypes.STRING(45),
+            allowNull :true
+        },
         // create_at : {
         //     type : 'TIMESTAMP',
         //     defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
