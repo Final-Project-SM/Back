@@ -29,6 +29,7 @@ const nfcController = {
             const response = await nfcService.listNfc(req.body);
             return res.json(response)
         }catch(err){
+            console.log(err)
             return res.json({sc:400})
         }
     },

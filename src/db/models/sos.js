@@ -11,7 +11,7 @@ export class Soss extends Model{
 
 Soss.init(
     {
-        seq : {
+        idx : {
             type: DataTypes.INTEGER,
             autoIncrement:true,
             primaryKey : true
