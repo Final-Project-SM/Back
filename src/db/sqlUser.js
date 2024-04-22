@@ -27,6 +27,11 @@ const sqlUser = {
         return user;
     },
 
+    findByAndroidId: async (uuid) => {
+        const user = await Users.findOne({attributes:['id'],where:{pid:uuid},raw:true});
+        return user;
+    },
+
     deletePhone: async (info) => {
         return ; 
     }

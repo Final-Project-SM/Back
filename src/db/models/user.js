@@ -52,7 +52,7 @@ Users.init(
             allowNull :true
         },
 
-        fcm : {
+        pid : {
             type : DataTypes.STRING(255),
             allowNull :true
         },

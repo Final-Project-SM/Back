@@ -19,8 +19,8 @@ const sqlnfc = {
         const nfc = await Nfcs.findAll({where:{id:uid,expired_at: null},raw:true})
         return nfc;
     },
-    findByNfc: async (nfc) => {
-        const nfc = await Nfcs.findOne({where:{nfcid:nfc},raw:true})
+    findByNfc: async (nfcid) => {
+        const nfc = await Nfcs.findOne({where:{nfcid:nfcid},raw:true})
         return nfc
     }
 };

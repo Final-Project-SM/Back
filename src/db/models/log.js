@@ -11,7 +11,7 @@ export class Logs extends Model{
 
 Logs.init(
     {
-        seq : {
+        idx : {
             type: DataTypes.INTEGER,
             autoIncrement:true,
             primaryKey : true
