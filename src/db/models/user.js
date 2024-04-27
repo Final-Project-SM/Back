@@ -57,20 +57,16 @@ Users.init(
             allowNull :true
         },
 
-        location : {
-            type : DataTypes.STRING(45),
-            allowNull :true
+        create_at : {
+            type : 'TIMESTAMP',
+            defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
+            allowNull : true
         },
-        // create_at : {
-        //     type : 'TIMESTAMP',
-        //     defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
-        //     allowNull : true
-        // },
 
-        // expired_at : {
-        //     type : 'TIMESTAMP',
-        //     allowNull : true
-        // }
+        expired_at : {
+            type : 'TIMESTAMP',
+            allowNull : true
+        }
 
     },
 

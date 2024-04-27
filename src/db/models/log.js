@@ -11,7 +11,7 @@ export class Logs extends Model{
 
 Logs.init(
     {
-        idx : {
+        seq : {
             type: DataTypes.INTEGER,
             autoIncrement:true,
             primaryKey : true
@@ -22,6 +22,10 @@ Logs.init(
             allowNull : false
         },
 
+        location : {
+            type: DataTypes.STRING(45),
+            allowNull:true
+        },
         region1 : {
             type: DataTypes.STRING(45),
             allowNull:true
@@ -47,11 +51,11 @@ Logs.init(
             allowNull:true
         },
 
-        // create_at : {
-        //     type : 'TIMESTAMP',
-        //     defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
-        //     allowNull : false
-        // }
+        create_at : {
+            type : 'TIMESTAMP',
+            defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
+            allowNull : false
+        }
     },
 
     {

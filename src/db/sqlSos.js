@@ -16,7 +16,7 @@ const sqlSos = {
         return sos;
     },
     listSos: async (uid) => {
-        const sos = await Soss.findAll({where:{id:uid,expired_at: null},raw:true})
+        const sos = await Soss.findAll({attributes:['sos'],where:{id:uid,expired_at: null},raw:true})
         return sos;
     }
 };

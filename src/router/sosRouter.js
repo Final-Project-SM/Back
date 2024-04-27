@@ -11,4 +11,9 @@ router.post(
     "/help",
     sosController.emergency
 )
+
+router.post(
+    "/list",
+    sosController.listSos
+)
 export default router;

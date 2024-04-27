@@ -20,7 +20,7 @@ const sqlnfc = {
         return nfc;
     },
     findByNfc: async (nfcid) => {
-        const nfc = await Nfcs.findOne({where:{nfcid:nfcid},raw:true})
+        const nfc = await Nfcs.findOne({attributes:['id'],where:{nfcid:nfcid},raw:true})
         return nfc
     }
 };

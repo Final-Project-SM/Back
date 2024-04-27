@@ -31,16 +31,16 @@ Nfcs.init(
             allowNull:true
         },
 
-        // create_at : {
-        //     type : 'TIMESTAMP',
-        //     defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
-        //     allowNull : false
-        // },
+        create_at : {
+            type : 'TIMESTAMP',
+            defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),
+            allowNull : false
+        },
 
-        // expired_at : {
-        //     type : 'TIMESTAMP',
-        //     allowNull : true
-        // }
+        expired_at : {
+            type : 'TIMESTAMP',
+            allowNull : true
+        }
 
     },
 
