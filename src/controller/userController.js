@@ -41,6 +41,35 @@ const userController = {
         }catch(err){
             return res.json({sc:400})
         }
+    },
+
+    listLog: async (req,res) => {
+        try{
+            const response = await userService.listLog(req.body);
+            return res.json(response)
+        }catch(err){
+            return res.json({sc:400})
+        }
+    },
+
+    main: async (req,res) => {
+        try{
+            const response = await userService.main(req.body);
+            return res.json(response)
+        }catch(err){
+            console.log(err)
+            return res.json({sc:400})
+        }
+    },
+
+    graph: async (req,res) => {
+        try{    
+            const response = await userService.graph(req.body)
+            return res.json(response)
+        }catch(err){
+            console.log(err) 
+            return res.json({sc:400})
+        }
     }
 };
 

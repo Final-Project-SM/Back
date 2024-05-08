@@ -23,5 +23,19 @@ router.post(
     userController.changeSos
 );
 
+router.post(
+    "/log",
+    userController.listLog
+);
+
+router.post(
+    "/main",
+    userController.main
+)
+
+router.post(
+    "/graph",
+    userController.graph
+)
 
 export default router;

@@ -1,5 +1,8 @@
 import bcrypt from "bcrypt";
 import sqlUser from "../db/sqlUser.js"
+import sqlLog from "../db/sqlLog.js"
+import sqlNews from "../db/sqlNews.js"
+import sqlSos from "../db/sqlSos.js";
 const userService = {
     login: async (body) => {
         try{
@@ -35,7 +38,7 @@ const userService = {
             if(user){
                 return {sc:200};
             }else{
-                return {msg: "회원가입 실패"}
+                return {sc:400}
             }
         }catch(err){
             console.log(err)
@@ -62,6 +65,44 @@ const userService = {
     changeSos: async (body) => {
         return {sc:200};
     },
+    listLog: async (body) => {
+        const log = await sqlLog.listLog(body.id)
+        console.log(log)
+        if(log){
+            return{sc:200,log:log}
+        }else{
+            return{sc:400}
+        }
+    },
+    main: async (body) => {
+        const news = await sqlNews.listNews();
+        const list = await sqlSos.listSos(body.id)
+        return {sc:200,news,list}
+    },
+    graph: async (body) => {
+        // 데이터형식 
+            // {
+            //     labels: ['강남','은평' ]
+            //     datasets: [
+            //         {
+            //             data; [7,10]
+            //         }
+            //     ]
+            // }
+        const response = await sqlLog.graph('충청남도')
+        const labels = []
+        const data = []
+        if(response.length > 0){
+            for(let i = 0; i<response.length;i++){
+                labels.push(response[i].region2)
+                data.push(response[i].region2_count)
+            }
+        }else{
+            console.log("업센용")
+        }
+        
+        return {sc:200,labels:labels,datasets:[{data:data}]}
+    }
 };
 
 export default userService;

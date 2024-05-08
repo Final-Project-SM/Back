@@ -3,8 +3,8 @@ import sequelize from "./models/index.js";
 import { Users } from "./models/user.js";
 
 const Fcm = {
-    updateFcm: async (uid,token) => {
-        const user = await Users.update({fcm:token},{where:{id:uid}})
+    updateFcm: async (uid,token,pid) => {
+        const user = await Users.update({fcm:token,pid:pid},{where:{id:uid}})
         return user;
     },
     findByFcm: async (uid) => {

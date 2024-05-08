@@ -3,6 +3,7 @@ import sqlSos from "../db/sqlSos.js"
 import sqlUser from '../db/sqlUser.js';
 import sqlLog from "../db/sqlLog.js"
 import sqlNfc from '../db/sqlNfc.js';
+import sqlFcm from "../db/sqlFcm.js"
 import admin from "firebase-admin"
 import axios from 'axios';
 import dotenv from "dotenv";
@@ -13,17 +14,22 @@ admin.initializeApp({
 dotenv.config();
 
 const snsServices = {
-    test: async (phone) => { //문자메세징
+    test: async (id) => { //문자메세징
+        const sos = await sqlSos.listSos(id)
+        console.log(sos)
+        for (let i=0 ; i<sos.length ;i++){
+            console.log(sos[i].phone)
+            //test(sos[i].phone)
+        }
         try{
             const mysms = coolsms.default;
             const messageService = new mysms(process.env.COOL1,process.env.COOL2);
-            const result = await messageService.sendOne({
-                to: phone,
-                from : process.env.PHONE,
-                text : `카톡으로 알려주세용`
-            })
-
-            console.log(result);
+            // const result = await messageService.sendOne({
+            //     to: phone,
+            //     from : process.env.PHONE,
+            //     text : `카톡으로 알려주세용`
+            // })
+            //console.log(result);
             return "성공";
         }catch(err){
             console.log(err)
@@ -52,8 +58,8 @@ const snsServices = {
                 id:uid,
                 location:response.data.documents[0].address_name,
                 region1:response.data.documents[0].region_1depth_name,
-                region2:response.data.documents[0].region_1depth_name,
-                region3:response.data.documents[0].region_1depth_name,
+                region2:response.data.documents[0].region_2depth_name,
+                region3:response.data.documents[0].region_3depth_name,
                 lat:lat,
                 lon:lon
             }
@@ -64,24 +70,35 @@ const snsServices = {
             return "에러"
         }
     },
-    test3: async (body) => { //nfc 메세지
+    test3: async (id) => { //nfc 메세지
         console.log(process.env.FCM)
-        let message = {
-            notification: {
-                title: "사용자",
-                body: "test",
-            },
-            token: process.env.FCM
+        const token = await sqlFcm.findByFcm(id)
+        if(token){
+            let message = {
+                notification: {
+                    title: "nfc",
+                    body: "Tag!",
+                },
+                token: token.fcm
+            }
+            try{
+                await admin.messaging().send(message);
+                return {sc:200}
+            }catch(err){
+                return {sc:400}
+            }
         }
-        try{
-            await admin.messaging().send(message);
-            return {sc:200}
-        }catch(err){
-            return {sc:400}
-        }
+        
     },
-    changeSos: async () => {
+    changeSos: async (body) => {
+        await sqlSos.deleteSos(body.id)
+        for (let i = 0; i< body.sos.length; i++){
+            console.log(typeof(body.sos[i]))
+            body.sos[i].id = body.id
+            console.log(body.sos[i])
+            await sqlSos.inserSos(body.sos[i])
 
+        }
     },
     listSos: async (body) => {
         const list = await sqlSos.listSos(body.id)
@@ -99,13 +116,12 @@ const snsServices = {
         if(nfc){
             const uid = await sqlUser.findByAndroidId(param2)
             if(uid.id == nfc.id){
-                const sos = await sqlSos.listSos(uid.id)
-                for (let i=0 ; i<sos.length ;i++){
-                    console.log(sos[i].sos)
-                    //test(sos[i].sos)
-                }
+                
+                await snsServices.test(uid.id)
+                
                 console.log(lat,lon,uid.id)
                 await snsServices.test2(lat,lon,uid.id)
+                await snsServices.test3(uid.id)
                 return {sc:200}
             }else{
                 return {sc:400}

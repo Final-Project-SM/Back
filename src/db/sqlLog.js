@@ -8,8 +8,23 @@ const Log = {
         return log;
     },
     listLog: async (uid) => {
-        const log = await Logs.findAll({where:{id:uid},raw:true})
+        const log = await Logs.findAll({limit: 10,where:{id:uid},order: [['create_at', 'DESC']] ,raw:true})
         return log;
+    },
+    graph: async (location) => {
+        const log = await Logs.findAll({
+            attributes:[
+                'region2',
+                [Sequelize.fn('COUNT', Sequelize.col('region2')), 'region2_count']
+            ],
+            where: {
+                region1: location,  // 'region1'이 '충청남도'인 경우
+            },
+            group: 'region2',
+            raw:true
+        })  
+        console.log(log)
+        return log; 
     }
 };
 

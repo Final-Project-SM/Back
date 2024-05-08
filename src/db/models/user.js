@@ -21,7 +21,7 @@ Users.init(
             allowNull : false
         },
 
-        email : {
+        name: {
             type: DataTypes.STRING(20),
             allowNull : false
         },
@@ -37,10 +37,6 @@ Users.init(
             allowNull : true
         },
 
-        uid : {
-            type: DataTypes.STRING(50),
-            allowNull : true
-        },
 
         phone : {
             type : DataTypes.STRING(30),

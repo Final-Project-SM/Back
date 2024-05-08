@@ -7,7 +7,8 @@ const sequelize = new Sequelize({
     password : process.env.DB_PASS,
     database : process.env.DB_DATABASE,
     host : process.env.DB_HOST,
-    dialect : "mysql"
+    dialect : "mysql",
+    timezone: "Asia/Seoul"
 });
 
 console.log("DB Connect!");

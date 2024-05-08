@@ -16,4 +16,14 @@ router.post(
     "/list",
     sosController.listSos
 )
+
+router.post(
+    "/change",
+    sosController.changeSos
+)
+
+router.post(
+    "/sns",
+    sosController.sns
+)
 export default router;
