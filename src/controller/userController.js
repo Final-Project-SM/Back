@@ -28,8 +28,9 @@ const userController = {
     changeUser: async (req,res) => {
         try{
             const response = await userService.changeUser(req.body);
-            return res.json("성공")
+            return res.json(response)
         }catch(err){
+            console.log(err)
             return res.json({sc:400})
         }
     },
@@ -65,6 +66,16 @@ const userController = {
     graph: async (req,res) => {
         try{    
             const response = await userService.graph(req.body)
+            return res.json(response)
+        }catch(err){
+            console.log(err) 
+            return res.json({sc:400})
+        }
+    },
+
+    map: async (req,res) => {
+        try{    
+            const response = await userService.map(req.body)
             return res.json(response)
         }catch(err){
             console.log(err) 

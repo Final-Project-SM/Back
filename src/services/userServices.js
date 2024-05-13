@@ -60,7 +60,15 @@ const userService = {
         }
     },
     changeUser: async (body) => {
-        return {sc:200};
+        try{
+            const bcryptPassword = await bcrypt.hash(body.password, 10);
+            body.password = bcryptPassword; 
+            await sqlUser.changeUser(body);
+            return {sc:200};
+        }catch(err){
+            return {sc:400}
+        }
+        
     },
     changeSos: async (body) => {
         return {sc:200};
@@ -89,7 +97,7 @@ const userService = {
             //         }
             //     ]
             // }
-        const response = await sqlLog.graph('충청남도')
+        const response = await sqlLog.graph(body.location)
         const labels = []
         const data = []
         if(response.length > 0){
@@ -102,7 +110,16 @@ const userService = {
         }
         
         return {sc:200,labels:labels,datasets:[{data:data}]}
-    }
+    },
+    map: async (body) => {
+        console.log(body)
+        const response = await sqlLog.map(body.region1,body.region2,body.region3)
+        if(response.length > 0){
+            return {sc:200,response}
+        }else{
+            return {sc:400}
+        }
+    },
 };
 
 export default userService;

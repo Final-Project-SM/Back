@@ -14,7 +14,7 @@ router.post(
 );
 
 router.post(
-    "/changeUser",
+    "/update",
     userController.changeUser
 );
 
@@ -36,6 +36,11 @@ router.post(
 router.post(
     "/graph",
     userController.graph
+)
+
+router.post(
+    "/map",
+    userController.map
 )
 
 export default router;

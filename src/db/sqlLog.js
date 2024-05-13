@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize,Op} from "sequelize";
 import sequelize from "./models/index.js";
 import { Logs } from "./models/log.js";
 
@@ -25,6 +25,23 @@ const Log = {
         })  
         console.log(log)
         return log; 
+    },
+    map: async (re1,re2,re3) => {
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+        console.log(oneMonthAgo)
+        const log = await Logs.findAll({
+            attributes: ['seq','location','lat', 'lon'], // 조회할 필드 지정
+            where: {
+                region1: re1,
+                region2: re2,
+                create_at: {
+                    [Op.gte]: oneMonthAgo
+                }
+            },
+            group: ['location']
+        });
+        return log;
     }
 };
 

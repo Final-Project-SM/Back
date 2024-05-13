@@ -21,19 +21,27 @@ const sqlUser = {
         const user = await Users.update({fcm:token},{where:{id:id}})
         return user;
     },
-
+    changeUser: async (info) => {
+        const user = await Users.update({name:info.name,password:info.password},{where:{id:info.id},raw:true})
+        return user
+    },
     updateLocation: async (id,location) => {
         const user = await Users.update({location:location},{where:{id:id}})
         return user;
     },
 
-    findByAndroidId: async (uuid) => {
-        const user = await Users.findOne({attributes:['id'],where:{pid:uuid},raw:true});
+    findByAndroidId: async (uuid,uid) => {
+        const user = await Users.findOne({attributes:['id'],where:{pid:uuid,id:uid},raw:true});
         return user;
     },
 
     deletePhone: async (info) => {
         return ; 
+    },
+
+    getName: async (id) => {
+        const user = await Users.findOne({attributes:['name'],where:{id:id},raw:true})
+        return user;
     }
 
 };
