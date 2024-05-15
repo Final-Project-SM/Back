@@ -2,8 +2,11 @@ import userService from "../services/userServices.js";
 const userController = {
     login: async (req,res) => {
         try{
+            console.log(req.body);
+            //process.stdout.flush();
+            //process.stdout.write(req.body)
             const response = await userService.login(req.body);
-            return res.json(response)
+             return res.json(response)
         }catch(err){
             return res.json({sc:400})
         }
@@ -79,6 +82,16 @@ const userController = {
             return res.json(response)
         }catch(err){
             console.log(err) 
+            return res.json({sc:400})
+        }
+    },
+
+    keyword: async (req,res)=> {
+        try{
+            const response = userService.keyword(req.body); 
+            return res.json(response)
+        }catch(err){
+            console.log(err)
             return res.json({sc:400})
         }
     }

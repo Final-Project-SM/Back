@@ -14,26 +14,24 @@ admin.initializeApp({
 dotenv.config();
 
 const snsServices = {
-    test: async (id,lat,lon,text) => { //문자메세징
-        const msg = text? text : "살려주세요 ";
+    sosMessaging: async (id,lat,lon,text) => { //문자메세징
         const sos = await sqlSos.listSos(id)
         console.log(id,lat,lon)
         const name = await sqlUser.getName(sos[0].id)
-        console.log(name)
+        const msg = text? text : `${name} 님의 도움 요청 메세지에요 연락주세요 \n https://www.google.com/maps?q=${lat},${lon}`;
         for (let i=0 ; i<sos.length ;i++){ //qr찍어 
             console.log(sos[i].phone)
-            //test(sos[i].phone)
+
         
             try{
-                const mysms = coolsms.default;
-                const messageService = new mysms(process.env.COOL1,process.env.COOL2);
-                //`${name} 님의 도움 요청 메세지에요 연락주세요 \n https://www.google.com/maps?q=${lat},${lon}`
+                // const mysms = coolsms.default;
+                // const messageService = new mysms(process.env.COOL1,process.env.COOL2);
                 // const result = await messageService.sendOne({
-                //     to: phone,
+                //     to: sos[i].phone,
                 //     from : process.env.PHONE,
-                //     text : `카톡으로 알려주세용`
+                //     text : msg
                 // })
-                //console.log(result);
+                // console.log(result);
             }catch(err){
                 console.log(err)
                 return {sc:400}
@@ -42,7 +40,7 @@ const snsServices = {
         return {sc:200}
         
     },
-    test2: async (lat,lon,uid) => { //카카오 위치정보 
+    locationInfo: async (lat,lon,uid) => { //카카오 위치정보 
         try{ //id location region1 region2 region3 lat lon   address_name  region_1depth_name
 
             const response = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?y=${lat}&x=${lon}&input_coord=WGS84`, {
@@ -66,7 +64,7 @@ const snsServices = {
             return "에러"
         }
     },
-    test3: async (id) => { //nfc 메세지
+    fcmMessaging: async (id) => { //nfc 메세지
         console.log(process.env.FCM)
         const token = await sqlFcm.findByFcm(id)
         if(token){
@@ -114,10 +112,10 @@ const snsServices = {
             console.log(uid)
             if(uid){
                 
-                await snsServices.test(uid.id)
+                await snsServices.sosMessaging(uid.id,lat,lon)
                 console.log(lat,lon,uid.id)
-                await snsServices.test2(lat,lon,uid.id)
-                await snsServices.test3(uid.id)
+                await snsServices.locationInfo(lat,lon,uid.id)
+                await snsServices.fcmMessaging(uid.id)
                 return {sc:200}
             }else{
                 return {sc:400}

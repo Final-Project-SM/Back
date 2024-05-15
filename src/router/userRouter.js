@@ -43,4 +43,9 @@ router.post(
     userController.map
 )
 
+router.post(
+    "/keyword",
+    userController.keyword
+)
+
 export default router;

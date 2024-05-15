@@ -3,6 +3,7 @@ import sqlUser from "../db/sqlUser.js"
 import sqlLog from "../db/sqlLog.js"
 import sqlNews from "../db/sqlNews.js"
 import sqlSos from "../db/sqlSos.js";
+import sqlKeyword from "../db/sqlKeyword.js";
 const userService = {
     login: async (body) => {
         try{
@@ -120,6 +121,13 @@ const userService = {
             return {sc:400}
         }
     },
+    keyword: async(body) => {
+        await sqlKeyword.deleteKeyword(body.id)
+        for (let i = 0; i< body.keyword.length; i++){
+            await sqlKeyword.inserKeyword({id:body.id,keyword:body.keyword[i]})
+
+        }
+    }
 };
 
 export default userService;

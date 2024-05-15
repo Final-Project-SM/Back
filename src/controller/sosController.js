@@ -46,8 +46,10 @@ const snsController = {
 
     sns: async (req,res) => {
         try{
-            const response = await sosServices.test(req.body.id,req.body.lat,req.body.lon)
-            return res.json(response)
+            console.log(req.body)
+            //const response = await sosServices.sosMessaging(req.body.id,req.body.lat,req.body.lon)
+            //return res.json(response)
+            return res.json({sc:200})
         }catch(err){
             console.log(err)
             return res.json({sc:400})
