@@ -7,6 +7,7 @@ import sosRouter from "./router/sosRouter.js";
 import userRouter from "./router/userRouter.js"
 import fcmRouter from "./router/fcmRouter.js"
 import nfcRouter from "./router/nfcRouter.js"
+import ansimiRouter from "./router/ansimiRouter.js"
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(cors());
 app.use("/sos",sosRouter);
 app.use("/fcm",fcmRouter)
 app.use("/nfc",nfcRouter)
+app.use("/ansimi",ansimiRouter)
 app.use("/",userRouter);
 app.listen(app.get('port'),()=>{
     console.log("start server");

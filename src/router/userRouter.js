@@ -48,4 +48,14 @@ router.post(
     userController.keyword
 )
 
+router.post(
+    "/keyword/list",
+    userController.keywordList
+)
+
+router.post(
+    '/follower',
+    userController.follower
+)
+
 export default router;

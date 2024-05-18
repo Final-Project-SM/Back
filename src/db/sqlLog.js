@@ -31,7 +31,7 @@ const Log = {
         oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
         console.log(oneMonthAgo)
         const log = await Logs.findAll({
-            attributes: ['seq','location','lat', 'lon'], // 조회할 필드 지정
+            attributes: [[sequelize.fn('COUNT', sequelize.col('location')), 'seq'],'location','lat', 'lon'], // 조회할 필드 지정
             where: {
                 region1: re1,
                 region2: re2,

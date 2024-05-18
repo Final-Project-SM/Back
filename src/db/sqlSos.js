@@ -18,6 +18,10 @@ const sqlSos = {
     listSos: async (uid) => {
         const sos = await Soss.findAll({where:{id:uid,expired_at: null},raw:true})
         return sos;
+    },
+    findFollower: async (phone) => {
+        const sos = await Soss.findAll({attributes:['id'],where:{phone:phone,expired_at:null},raw:true})
+        return sos
     }
 };
 

@@ -42,6 +42,16 @@ const sqlUser = {
     getName: async (id) => {
         const user = await Users.findOne({attributes:['name'],where:{id:id},raw:true})
         return user;
+    },
+
+    getPhone: async (id) => {
+        const user = await Users.findOne({attributes:['phone'],where:{id:id},raw:true})
+        return user;
+    },
+
+    findFollowerInfo: async (id) => {
+        const user = await Users.findOne({attributes:['id','name','phone'],where:{id:id},raw:true})
+        return user;
     }
 
 };

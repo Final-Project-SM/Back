@@ -13,6 +13,11 @@ const sqlKeyword = {
         return keyword;
     },
 
+    listKeyword: async (uid) => {
+        const keyword = await Keywords.findAll({where:{id:uid,expired_at:null},raw:true})
+        return keyword 
+    }
+
 };
 
 export default sqlKeyword;

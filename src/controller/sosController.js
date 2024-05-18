@@ -4,9 +4,8 @@ const snsController = {
     sos: async (req, res) => {
         try{
             //p1 nfc 이름 p2 안드로이드 id 
-            console.log(req.query.param1,req.query.param2)
-            //const response = await sosServices.sos('DFdJ5r2m','a4d891c479438c59',36.8249032508096,127.0902002998015);
-            const response = await sosServices.sos(req.query.param1,req.query.param2,req.query.lat,req.query.lon);
+            console.log(req.query)
+            const response = await sosServices.sos(req.query.param1,req.query.param2,req.query.lat,req.query.lon,req.query.type);
             console.log(response)
             return res.json(response);
         }catch(err){
@@ -46,15 +45,15 @@ const snsController = {
 
     sns: async (req,res) => {
         try{
-            console.log(req.body)
-            //const response = await sosServices.sosMessaging(req.body.id,req.body.lat,req.body.lon)
-            //return res.json(response)
-            return res.json({sc:200})
+            //console.log(req.body)
+            const response = await sosServices.sosMessaging(req.body.id,req.body.lat,req.body.lon,req.body.text)
+            return res.json(response)
         }catch(err){
             console.log(err)
             return res.json({sc:400})
         }
-    }
+    },
+    
 
 
 }

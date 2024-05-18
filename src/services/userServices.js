@@ -127,6 +127,29 @@ const userService = {
             await sqlKeyword.inserKeyword({id:body.id,keyword:body.keyword[i]})
 
         }
+    },
+    keywordList: async (body) => {
+        const keyword = await sqlKeyword.listKeyword(body.id)
+        const newKeywords = [] 
+        if(keyword){
+            
+            for (let i = 0 ; i <keyword.length ; i ++ ){
+                newKeywords.push(keyword[i].keyword)
+            }
+            return {sc:200,keyword:newKeywords}
+        }
+        return {sc:400}
+    },
+    follower: async (body) => {
+        const data = await sqlUser.getPhone(body.id)
+        const follower = await sqlSos.findFollower(data.phone)
+        const list = []
+        for(let i = 0; i< follower.length; i++){
+            const followerInfo = await sqlUser.findFollowerInfo(follower[i].id)
+            list.push(followerInfo)
+            
+        }
+        return list
     }
 };
 

@@ -18,7 +18,8 @@ const snsServices = {
         const sos = await sqlSos.listSos(id)
         console.log(id,lat,lon)
         const name = await sqlUser.getName(sos[0].id)
-        const msg = text? text : `${name} 님의 도움 요청 메세지에요 연락주세요 \n https://www.google.com/maps?q=${lat},${lon}`;
+        const msg = text? `${name.name}님이 보낸 메세지 \n ` + text : `${name.name} 님의 도움 요청 메세지에요 연락주세요 \n https://www.google.com/maps?q=${lat},${lon}`;
+        console.log(msg)
         for (let i=0 ; i<sos.length ;i++){ //qr찍어 
             console.log(sos[i].phone)
 
@@ -48,12 +49,14 @@ const snsServices = {
                 Authorization: `KakaoAK ${process.env.KAKAO}`,
             },
             });
+            console.log(response.data.documents[0])
+            const locationData = response.data.documents[0].road_address? response.data.documents[0].road_address : response.data.documents[0].address
             const log = {
                 id:uid,
-                location:response.data.documents[0].road_address.address_name,
-                region1:response.data.documents[0].road_address.region_1depth_name,
-                region2:response.data.documents[0].road_address.region_2depth_name,
-                region3:response.data.documents[0].road_address.region_3depth_name,
+                location:locationData.address_name,
+                region1:locationData.region_1depth_name,
+                region2:locationData.region_2depth_name,
+                region3:locationData.region_3depth_name,
                 lat:lat,
                 lon:lon
             }
@@ -64,21 +67,28 @@ const snsServices = {
             return "에러"
         }
     },
-    fcmMessaging: async (id) => { //nfc 메세지
+    fcmMessaging: async (id,type) => { //nfc 메세지
         console.log(process.env.FCM)
+        console.log("타입 : ",type)
         const token = await sqlFcm.findByFcm(id)
         if(token){
             let message = {
                 notification: {
                     title: "nfc",
                     body: "Tag!",
+                    
+                },
+                data:{
+                    type:String(type)
                 },
                 token: token.fcm
             }
+        
             try{
                 await admin.messaging().send(message);
                 return {sc:200}
             }catch(err){
+                console.log(err)
                 return {sc:400}
             }
         }
@@ -103,7 +113,7 @@ const snsServices = {
             return {sc:400}
         }
     },
-    sos: async (param1,param2,lat,lon) => {
+    sos: async (param1,param2,lat,lon,type) => {
         //p1 nfc 이름 p2 안드로이드 id 
         const nfc = await sqlNfc.findByNfc(param1)
 
@@ -115,7 +125,7 @@ const snsServices = {
                 await snsServices.sosMessaging(uid.id,lat,lon)
                 console.log(lat,lon,uid.id)
                 await snsServices.locationInfo(lat,lon,uid.id)
-                await snsServices.fcmMessaging(uid.id)
+                await snsServices.fcmMessaging(uid.id,type)
                 return {sc:200}
             }else{
                 return {sc:400}

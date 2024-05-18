@@ -88,7 +88,26 @@ const userController = {
 
     keyword: async (req,res)=> {
         try{
-            const response = userService.keyword(req.body); 
+            const response = await userService.keyword(req.body); 
+            return res.json(response)
+        }catch(err){
+            console.log(err)
+            return res.json({sc:400})
+        }
+    },
+
+    keywordList: async (req,res) => {
+        try{ 
+            const response = await userService.keywordList(req.body)
+            return res.json(response)
+        }catch(err){
+            console.log(err)
+            return res.json({sc:400})
+        }
+    },
+    follower: async (req,res) => {
+        try{ 
+            const response = await userService.follower(req.body)
             return res.json(response)
         }catch(err){
             console.log(err)
