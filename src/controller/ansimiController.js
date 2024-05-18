@@ -14,7 +14,7 @@ const ansimiController = {
     ansimiHistory: async (req,res) => {
         try{
             const response = await ansimiService.ansimiHistory(req.body)
-            return res.json({sc:200})
+            return res.json(response)
         }catch(err){
             console.log(err)
             return res.json({sc:400})

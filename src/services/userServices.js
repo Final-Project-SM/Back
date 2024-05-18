@@ -4,6 +4,7 @@ import sqlLog from "../db/sqlLog.js"
 import sqlNews from "../db/sqlNews.js"
 import sqlSos from "../db/sqlSos.js";
 import sqlKeyword from "../db/sqlKeyword.js";
+import sqlAnsimis from "../db/sqlAnsimi.js";
 const userService = {
     login: async (body) => {
         try{
@@ -114,9 +115,13 @@ const userService = {
     },
     map: async (body) => {
         console.log(body)
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        console.log(formattedDate)
         const response = await sqlLog.map(body.region1,body.region2,body.region3)
+        const locations = await sqlAnsimis.history(formattedDate,body.id)
         if(response.length > 0){
-            return {sc:200,response}
+            return {sc:200,response,locations}
         }else{
             return {sc:400}
         }

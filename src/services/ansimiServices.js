@@ -20,7 +20,12 @@ const ansimiService = {
         }
     },
     ansimiHistory: async(body) => {
-        
+        const response = await sqlAnsimis.getDate(body.id)
+        for(let i = 0;i<response.length;i++){
+            const history = await sqlAnsimis.history(response[i].date,body.id)
+            response[i] = {...response[i],locations:history}
+        }
+        return response
     }
     
 }

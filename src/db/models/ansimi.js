@@ -19,12 +19,12 @@ Ansimis.init(
 
         uid : {
             type: DataTypes.STRING(60),
-            allowNull : false
+            allowNull : true
         },
 
         id : {
             type: DataTypes.STRING(60),
-            allowNull : false
+            allowNull : true
         },
 
         location : {

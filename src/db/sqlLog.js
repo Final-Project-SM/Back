@@ -29,7 +29,6 @@ const Log = {
     map: async (re1,re2,re3) => {
         const oneMonthAgo = new Date();
         oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-        console.log(oneMonthAgo)
         const log = await Logs.findAll({
             attributes: [[sequelize.fn('COUNT', sequelize.col('location')), 'seq'],'location','lat', 'lon'], // 조회할 필드 지정
             where: {
@@ -40,7 +39,7 @@ const Log = {
                 }
             },
             group: ['location']
-        });
+        ,raw:true});
         return log;
     }
 };
