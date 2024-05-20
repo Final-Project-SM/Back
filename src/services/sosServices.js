@@ -18,7 +18,7 @@ const snsServices = {
         const sos = await sqlSos.listSos(id)
         console.log(id,lat,lon)
         const name = await sqlUser.getName(sos[0].id)
-        const msg = text? `${name.name}님이 보낸 메세지 \n ` + text : `${name.name} 님의 도움 요청 메세지에요 연락주세요 \n https://www.google.com/maps?q=${lat},${lon}`;
+        const msg = text? `${name.name}님이 보낸 메세지 \n` + text : `${name.name} 님의 도움 요청 메세지에요 연락주세요 \n https://www.google.com/maps?q=${lat},${lon}`;
         console.log(msg)
         for (let i=0 ; i<sos.length ;i++){ //qr찍어 
             console.log(sos[i].phone)

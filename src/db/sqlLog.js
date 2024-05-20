@@ -41,6 +41,20 @@ const Log = {
             group: ['location']
         ,raw:true});
         return log;
+    },
+    findByLocation: async (location) => {
+        const log = await Logs.findAll({
+            attributes: [
+              [Sequelize.fn('COUNT', Sequelize.col('location')), 'total']
+            ],
+            where: {
+              location: location
+            },
+            group: 'location',
+            raw: true
+          });
+      
+        return log
     }
 };
 
