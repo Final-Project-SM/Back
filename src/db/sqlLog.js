@@ -55,6 +55,10 @@ const Log = {
           });
       
         return log
+    },
+    reportInfo: async (id) => {
+        const log = await Logs.findOne({attributes:['seq','location','lat','lon','stt','create_at'],where:{id:id},order: [['create_at', 'DESC']],raw:true})
+        return log
     }
 };
 

@@ -134,6 +134,23 @@ const snsServices = {
         }else{
             return {sc:400}
         }
+    },
+    emergency: async (id) => {
+        //male //female
+        const userInfo = await sqlUser.getUserInfo(id)
+        const gender = userInfo.gender == 'male'? "남자" : "여자"
+        const report = await sqlLog.reportInfo(id)
+        const time = report.create_at.toISOString().split('T')[0] +" "+ report.create_at.toISOString().split('T')[1].split('.')[0];
+        const msg = `이름: ${userInfo.name}\n나이: 만 ${userInfo.age}세\n성별 ${gender}\n장소: ${report.location}\n시간: ${time}\n신고내용: ${report.stt?report.stt:""}\n상세위치\nhttps://www.google.com/maps?q=${report.lat},${report.lon}`
+        console.log(msg)
+        // const mysms = coolsms.default;
+        // const messageService = new mysms(process.env.COOL1,process.env.COOL2);
+        // const result = await messageService.sendOne({
+        //     to: "경찰",
+        //     from : process.env.PHONE,
+        //     text : msg
+        // })
+        // console.log(result);
     }
     
 }

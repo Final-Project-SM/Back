@@ -51,6 +51,11 @@ Logs.init(
             allowNull:true
         },
 
+        stt : {
+            type: DataTypes.STRING(255),
+            allowNull:true
+        },
+
         create_at : {
             type : 'TIMESTAMP',
             defaultValue : Sequelize.literal('CURRENT_TIMESTAMP'),

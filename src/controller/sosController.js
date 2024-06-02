@@ -16,9 +16,10 @@ const snsController = {
     //112 119 신고 
     emergency: async (req,res) => {
         try{
-            console.log("")
+            const response = await sosServices.emergency(req.body.id)
             return res.json({sc:200})
         }catch(err){
+            console.log(err)
             return res.json({sc:400})
         }
     },

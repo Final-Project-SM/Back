@@ -52,6 +52,11 @@ const sqlUser = {
     findFollowerInfo: async (id) => {
         const user = await Users.findOne({attributes:['id','name','phone'],where:{id:id},raw:true})
         return user;
+    },
+
+    getUserInfo: async (id) => {
+        const user = await Users.findOne({attributes:['name','gender','phone',[Sequelize.literal(`YEAR(CURDATE()) - YEAR(age) - (RIGHT(CURDATE(), 5) < RIGHT(age, 5))`), 'age']],where:{id:id},raw:true})
+        return user;
     }
 
 };

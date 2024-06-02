@@ -119,7 +119,7 @@ const userService = {
         const formattedDate = today.toISOString().split('T')[0];
         console.log(formattedDate)
         const response = await sqlLog.map(body.region1,body.region2,body.region3)
-        const locations = await sqlAnsimis.history(formattedDate,body.id)
+        const locations = await sqlAnsimis.history(body.today,body.id)
         if(response.length > 0){
             return {sc:200,response,locations}
         }else{
